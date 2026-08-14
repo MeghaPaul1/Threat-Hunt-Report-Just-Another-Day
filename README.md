@@ -328,15 +328,18 @@ Searching the Billing share for files whose names read like exceptions or HR con
 
 ```kql
 DeviceFileEvents
+| where TimeGenerated between (datetime(2026-03-11 12:00) .. datetime(2026-03-11 14:00))
 | where DeviceName startswith "nh-"
-| where FolderPath contains "Billing"
-| where FileName has_any ("exception", "payroll", "hr_", "compensation", "salary", "awards", "merit")
-| project Timestamp, ActionType, InitiatingProcessAccountName, FileName, FolderPath, InitiatingProcessCommandLine
+| where FolderPath startswith "C:\\Shares\\HR"
+| project TimeGenerated, DeviceName, ActionType, FileName, FolderPath,
+    InitiatingProcessFileName, InitiatingProcessAccountName
+| order by TimeGenerated asc
 ```
 
 The same query pattern surfaced a second file with the same double `.txt` extension trick, staged shortly before the payroll file. `quarterly_awards_shortlist_20260310.txt` was pulled from an HR awards folder, unrelated to payroll but still sensitive HR material identifying employees selected for recognition and their proposed rewards. Two files from two distinct HR functions (compensation and awards), staged in the Billing share under camouflage, means the collection is broader than a single payroll incident, it is a systematic sweep of HR review artifacts.
 
-![flag13](screenshots/flag13.png)
+![flag13]<img width="1082" height="466" alt="image" src="https://github.com/user-attachments/assets/9edddda1-c908-4254-944f-14e0be3f9a2e" />
+
 
 **Answer:** `quarterly_awards_shortlist_20260310.txt`
 
@@ -366,7 +369,8 @@ DeviceLogonEvents
 
 Filtering `j.morris` successful `RemoteInteractive` logons to hosts other than the billing workstation returned two additional targets: `nh-fs-01` (the file server) and `nh-wks-it-01` (the IT workstation). The `RemoteIP` on both pivot logons resolved to `nh-wks-bill-01`'s internal address, confirming the sessions were internal hops from the billing workstation the operator already held, not fresh external logons.
 
-![flag14](screenshots/flag14.png)
+![flag14]<img width="801" height="376" alt="image" src="https://github.com/user-attachments/assets/6b34e467-795f-4086-9538-8d14bcc5562c" />
+
 
 **Answer:** `nh-fs-01.corp.nimbushealth.com, nh-wks-it-01.corp.nimbushealth.com`
 
@@ -384,9 +388,11 @@ DeviceFileEvents
 
 Comparing the two pivot targets side by side made the split obvious. On `nh-wks-it-01` the only activity was standard Windows first logon profile initialization (`Explorer.EXE`, `unregmp2.exe /FirstLogon`, `ie4uinit.exe`, `WininetPlugin.dll` cache migration, Edge `setup.exe`), the noise every fresh user profile generates when it initializes on a Windows host. No commands, no file opens, no lateral movement onward. On `nh-fs-01`, by contrast, there was operator driven activity including native discovery commands and text files consistent with hands on collection. The IT box was a landing without follow through, the file server was where the actual work happened.
 
-![flag15-1](screenshots/flag15-1.png)
+![flag15-1]<img width="1380" height="527" alt="image" src="https://github.com/user-attachments/assets/e3847be8-b709-4247-8b64-febe2b1cf12a" />
 
-![flag15-2](screenshots/flag15-2.png)
+
+![flag15-2]<img width="1080" height="528" alt="image" src="https://github.com/user-attachments/assets/3b7a0035-a5ae-4415-b2cd-ff0163ad6da9" />
+
 
 **Answer:** `no hands on keyboard activity, only Windows profile initialization`
 
@@ -412,7 +418,8 @@ DeviceProcessEvents
 
 On the file server, `j.morris` ran `whoami.exe /groups`, which enumerates the security groups the account belongs to on the target host. This is the same discovery pattern the operator used on the billing workstation, checking group membership before deciding what to touch. On a file server specifically, the group check confirms whether the account carries the permissions needed to browse shares and read protected data.
 
-![flag16](screenshots/flag16.png)
+![flag16]<img width="1235" height="422" alt="image" src="https://github.com/user-attachments/assets/adfc8b81-3d84-4d96-a7c7-9f92f28a75ae" />
+
 
 **Answer:** `"whoami.exe" /groups`
 
@@ -432,7 +439,8 @@ DeviceProcessEvents
 
 Directly after the privilege check, the operator ran `net.exe share`, which lists every share the file server is exposing along with their paths and permissions. Combining the privilege check with a share enumeration gave the operator a full picture: what they were authorized to do, and where the sensitive shares were mounted.
 
-![flag17](screenshots/flag17.png)
+![flag17]<img width="1340" height="435" alt="image" src="https://github.com/user-attachments/assets/27bef442-52af-4c1c-aee6-1351c7f87026" />
+
 
 **Answer:** `"net.exe" share`
 
