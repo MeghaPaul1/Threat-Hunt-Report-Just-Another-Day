@@ -56,7 +56,7 @@ The evidence rules out both a routine insider mistake (deliberate cross departme
 DeviceLogonEvents
 | where Timestamp between (datetime(2026-03-08) .. datetime(2026-03-19))
 | where DeviceName startswith "nh-"
-| where AccountName == "billing_analyst_account_name_here"
+| where AccountName == "j.morris"
 | project Timestamp, DeviceName, AccountName, LogonType, RemoteIP, RemoteDeviceName
 | order by Timestamp asc
 ```
