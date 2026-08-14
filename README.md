@@ -176,7 +176,8 @@ DeviceProcessEvents
 
 The final command in the recon burst was `net view \\NH-FS-01`, which enumerates the shares exposed by a single named host. That host, `NH-FS-01`, is the Nimbus file server, and the operator was lining it up as their next collection target before making any move toward it.
 
-![flag6](screenshots/flag6.png)
+![flag6]<img width="1297" height="587" alt="image" src="https://github.com/user-attachments/assets/b7fe78bb-a00a-4446-8546-982f300b2fd8" />
+
 
 **Answer:** `NH-FS-01`
 
