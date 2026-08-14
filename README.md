@@ -54,16 +54,16 @@ The evidence rules out both a routine insider mistake (deliberate cross departme
 
 ```kql
 DeviceLogonEvents
-| where Timestamp between (datetime(2026-03-08) .. datetime(2026-03-19))
 | where DeviceName startswith "nh-"
-| where AccountName == "j.morris"
-| project Timestamp, DeviceName, AccountName, LogonType, RemoteIP, RemoteDeviceName
-| order by Timestamp asc
+| where TimeGenerated between (datetime(2026-03-08) .. datetime(2026-03-19))
+| summarize Count = count(), Devices = make_set(DeviceName, 10), DeviceCount = dcount(DeviceName) by AccountName
+| order by DeviceCount desc, Count desc
 ```
 
 Investigation started against every device in the billing department. Reviewing the logs, several attempts to log in were followed by a successful logon at 2026-03-09T01:30:31 UTC with `IsLocalLogon: false`. That flag confirmed the successful session came from a remote source rather than a user sitting at the billing desk, and the account driving it was `j.morris`. That is who the rest of the hunt follows.
 
-![flag1]<img width="1513" height="825" alt="image" src="https://github.com/user-attachments/assets/94a0de26-4cb7-4f66-b0db-9e1baf9f918b" />
+![flag1]<img width="1355" height="661" alt="image" src="https://github.com/user-attachments/assets/7604e012-cb1b-408c-bcf4-4fcb6303fe06" />
+
 
 
 **Answer:** `j.morris`
