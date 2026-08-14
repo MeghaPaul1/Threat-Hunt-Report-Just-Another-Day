@@ -154,7 +154,8 @@ DeviceProcessEvents
 
 Filtering to processes initiated by `j.morris` (not `system`) surfaced a tight burst of native discovery commands at 2026-03-11T12:42:12 UTC. The operator ran identity checks (`whoami`, `hostname`), then session and network view enumeration (`net use`, `net view`), then closed with an explicit `net view \\NH-FS-01` naming the file server as a specific target. That last command flipped the recon from general discovery to targeted acquisition.
 
-![flag5](screenshots/flag5.png)
+![flag5]<img width="1466" height="627" alt="image" src="https://github.com/user-attachments/assets/36c91bf0-d38b-4269-8c74-c48a193cbf6b" />
+
 
 **Answer:** `whoami, hostname, net use, net view, net view \\NH-FS-01`
 
