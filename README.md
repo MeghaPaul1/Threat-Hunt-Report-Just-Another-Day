@@ -219,7 +219,8 @@ DeviceProcessEvents
 
 Between 13:18:51 and 13:20:19 UTC the operator ran a sequence of `nslookup` reverse DNS lookups against internal IPs (`10.1.0.233`, `10.1.0.234`, `10.1.0.235`, `10.1.7.255`, `224.0.0.22`, `10.1.0.1`). Reverse DNS resolves an IP back to a hostname without touching the target host, quiet, no auth attempts, no port probes. This let the operator identify what each machine was (workstation, DC, file server) before choosing a target. Immediately after the sweep completed, they RDP'd into the domain controller, confirming the recon was silent target selection ahead of the pivot.
 
-![flag8](screenshots/flag8.png)
+![flag8]<img width="697" height="527" alt="image" src="https://github.com/user-attachments/assets/ea848976-c5c1-4b80-8030-60545883145b" />
+
 
 **Answer:** `reverse DNS reconnaissance with nslookup, RDP pivot to the domain controller (nh-dc-01)`
 
