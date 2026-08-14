@@ -85,7 +85,8 @@ DeviceLogonEvents
 
 Grouping the successful logon events for `j.morris` by `LogonType` isolated the logon method used across every successful session. `Network` was ruled out because the successful logons carried an external source. Between `Batch` and `RemoteInteractive`, `RemoteInteractive` fit the pattern of RDP sessions coming into the estate from outside the clinic network.
 
-![flag2](screenshots/flag2.png)
+![flag2]<img width="828" height="692" alt="image" src="https://github.com/user-attachments/assets/47c35b62-9aaa-478b-b8cf-d0b5a4b297db" />
+
 
 **Answer:** `RemoteInteractive`
 
