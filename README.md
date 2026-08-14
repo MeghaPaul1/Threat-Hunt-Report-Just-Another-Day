@@ -267,7 +267,8 @@ union DeviceFileEvents, DeviceProcessEvents
 
 `j.morris` opened `approved_pending_invoice_INV-664215_20260310.txt` from `\\NH-FS-01\Billing\2026-03\Approved\` using notepad at 12:10:57 UTC on 11 March, followed 13 seconds later by a `FileModified` event on the same file at the file server. A second invoice, `approved_pending_invoice_INV-773221_20260311.txt`, was opened and renamed moments later. Both invoices live in the sign off stage folder outside `j.morris`'s submissions role. The extension was the trap on this flag, notepad opened `.txt` files, not the `.csv` the rest of the Billing share uses, so the on disk filename ends in `.txt` and the shortcut in `Recent` strips the extension.
 
-![flag10](screenshots/flag10.png)
+![flag10]<img width="1341" height="532" alt="image" src="https://github.com/user-attachments/assets/25684886-992b-4910-a74d-992e3a329dc0" />
+
 
 **Answer:** `approved_pending_invoice_INV-664215_20260310.txt`
 
@@ -288,7 +289,8 @@ DeviceFileEvents
 
 `j.morris` modified `review_audit_20260311.txt` on the file server, the workflow's audit trail file that records reviewer actions on the sign off stage. Because the write to the FS was carried out by the `system` account on `nh-fs-01` over SMB, the modification only surfaces cleanly by filtering on the FS system context rather than the initiating user. The audit trail is designed to log reviewer activity like `d.patel`'s, so a modification driven from a submitter's session is direct evidence of the operator falsifying or covering the workflow record.
 
-![flag11](screenshots/flag11.png)
+![flag11]<img width="1502" height="543" alt="image" src="https://github.com/user-attachments/assets/d51eeaae-b6f8-4840-8954-80fdbbfab146" />
+
 
 **Answer:** `review_audit_20260311.txt`
 
