@@ -106,7 +106,8 @@ DeviceLogonEvents
 
 Scoping `j.morris` successful logons to the `RemoteIP` field showed the external source of every remote interactive session. The IP `193.36.225.245` is a public address that does not fall within any of the internal `10.x` ranges observed on the Nimbus estate, confirming the session origin was external, not a misclassified internal device.
 
-![flag3](screenshots/flag3.png)
+![flag3]<img width="1393" height="508" alt="image" src="https://github.com/user-attachments/assets/52e55609-e6ea-423e-8dfb-aa795879cbf9" />
+
 
 **Answer:** `193.36.225.245`
 
