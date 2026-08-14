@@ -460,7 +460,8 @@ DeviceProcessEvents
 
 The last action on the file server was opening `payroll_review_dpatel_20260311.txt`, a payroll review file belonging to `d.patel`, the same reviewer account the operator was already driving in parallel on the billing workstation. The operator used `j.morris`'s file server session to read `d.patel`'s payroll review, confirming they were interested not just in the reviewer's permissions but in the reviewer's personal compensation record. The same filename also appears staged locally at `C:\Users\j.morris\Documents\payroll_review_dpatel_20260311.txt`, showing the file was pulled down to the billing workstation's user folder as a working copy.
 
-![flag18](screenshots/flag18.png)
+![flag18]<img width="1358" height="455" alt="image" src="https://github.com/user-attachments/assets/a1034bf8-7716-4050-99e4-4ad12b417e04" />
+
 
 **Answer:** `payroll_review_dpatel_20260311.txt (belongs to d.patel, the reviewer account also driven by the operator)`
 
