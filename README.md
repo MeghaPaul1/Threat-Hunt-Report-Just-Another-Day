@@ -132,7 +132,8 @@ DeviceProcessEvents
 
 Sorting by time surfaces a burst of file deletions on the billing workstation at the top of the results. Two fields rule these out as operator activity: `InitiatingProcessAccountName` is `system`, not `j.morris`, and `IsInitiatingProcessRemoteSession` is `false`. That combination proves the deletions were driven by a local system context, not by a remote human session. Machine housekeeping, not the intruder.
 
-![flag4](screenshots/flag4.png)
+![flag4]<img width="1357" height="536" alt="image" src="https://github.com/user-attachments/assets/eb964af1-0125-4a39-a330-66e1d6fe85d5" />
+
 
 **Answer:** `noise, the deletions were driven by the system account, not the remote operator`
 
