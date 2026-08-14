@@ -238,16 +238,17 @@ Between 13:18:51 and 13:20:19 UTC the operator ran a sequence of `nslookup` reve
 
 ```kql
 DeviceFileEvents
+| where TimeGenerated between (datetime(2026-03-08) .. datetime(2026-03-19))
 | where DeviceName == "nh-wks-bill-01.corp.nimbushealth.com"
-| where FolderPath startswith "\\\\NH-FS-01\\Billing"
-| where InitiatingProcessAccountName in ("j.morris", "d.patel")
-| project Timestamp, InitiatingProcessAccountName, ActionType, FolderPath, FileName
-| order by Timestamp asc
+| where FolderPath contains "billing"
+| project TimeGenerated, DeviceName,InitiatingProcessAccountName, ActionType, FileName, FolderPath
+| order by TimeGenerated asc
 ```
 
 The billing workflow has two stages under `\\NH-FS-01\Billing\2026-03\`: `Pending` (submissions, where `j.morris` legitimately works) and `Approved` (sign off stage, meant for reviewers). The compromised `j.morris` account never wrote to `Approved` directly, but the same workstation (`nh-wks-bill-01`) shows `d.patel` writing to `Approved` within seconds of `j.morris` writing to `Pending`, sometimes under 40 seconds apart. That interleaving between two distinct user accounts on a single host is not achievable by one human hand switching sessions, it is the signature of a single operator holding valid credentials for both accounts and using each for whichever workflow stage it is authorized on.
 
-![flag9](screenshots/flag9.png)
+![flag9]<img width="1290" height="487" alt="image" src="https://github.com/user-attachments/assets/554f078d-0bc9-4c85-9fdb-0e43f79f0228" />
+
 
 **Answer:** `Approved`
 
