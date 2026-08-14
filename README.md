@@ -198,7 +198,8 @@ DeviceProcessEvents
 
 At 2026-03-11T13:17:35 UTC the operator returned to the shell and ran `net view /domain:nimbus`, which asks the domain controller for every host visible on the Nimbus domain. The shift from a single named server to the full domain view marks the escalation from targeted recon to broad estate enumeration.
 
-![flag7](screenshots/flag7.png)
+![flag7]<img width="1281" height="552" alt="image" src="https://github.com/user-attachments/assets/9ef987d3-ff87-4560-9dc6-6eab1cfb97d2" />
+
 
 **Answer:** `"net.exe" view /domain:nimbus`
 
