@@ -302,15 +302,21 @@ DeviceFileEvents
 
 ```kql
 DeviceFileEvents
+| where TimeGenerated between (datetime(2026-03-08) .. datetime(2026-03-18))
 | where DeviceName startswith "nh-"
-| where FolderPath contains "Billing"
-| where FileName has_any ("exception", "payroll", "hr_", "compensation", "salary")
-| project Timestamp, ActionType, InitiatingProcessAccountName, FileName, FolderPath, InitiatingProcessCommandLine
+| where ActionType == "FileRenamed"
+| where FolderPath has "Billing" or PreviousFolderPath has "Billing"
+    or PreviousFolderPath has "HR"
+| project TimeGenerated, ActionType, FileName, PreviousFileName,
+    FolderPath, PreviousFolderPath,
+    InitiatingProcessFileName, InitiatingProcessAccountName
+| order by TimeGenerated asc
 ```
 
 Searching the Billing share for files whose names read like exceptions or HR content surfaced a file named `payroll_exception_reference_20260311.txt.txt`. The double `.txt.txt` extension is the tell. A quick visual pass reads it as a single `.txt` and slides past the doubled suffix, exactly the "sit there without raising an eyebrow" camouflage the hunt lead flagged. The operator pulled payroll material out of HR, renamed it to look like a routine billing exception reference, and staged it inside the Billing share where its presence would not draw a second look.
 
-![flag12](screenshots/flag12.png)
+![flag12]<img width="1223" height="547" alt="image" src="https://github.com/user-attachments/assets/0bc3a022-7fba-48ab-b92a-c071b1ba0e02" />
+
 
 **Answer:** `payroll_exception_reference_20260311.txt.txt`
 
